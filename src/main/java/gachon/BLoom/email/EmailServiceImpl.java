@@ -16,7 +16,7 @@ public class EmailServiceImpl implements EmailService{
 
     @Autowired
     private JavaMailSender emailSender;
-    private static String ePw;
+    public static String ePw;
 
     @Override
     @Transactional

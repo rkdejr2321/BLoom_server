@@ -57,6 +57,15 @@ public class MemberController {
         emailService.sendConfirmMessage(email);
     }
 
+    @PostMapping("/mailVerify")
+    public ResponseEntity<?> codeVerify(@RequestBody String code) throws Exception {
+        if(emailService.ePw.equals(code)) {
+            return new ResponseEntity<>("인증이 완료되었습니다.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("코드가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 //    //전문의 회원가입
 //    @PostMapping("/doctor/signup")
