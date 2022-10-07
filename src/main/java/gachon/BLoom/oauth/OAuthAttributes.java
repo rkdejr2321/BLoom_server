@@ -1,4 +1,4 @@
-package gachon.BLoom.member.oauth;
+package gachon.BLoom.oauth;
 
 import gachon.BLoom.entity.Role;
 import gachon.BLoom.entity.Member;

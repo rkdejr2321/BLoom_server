@@ -2,6 +2,7 @@ package gachon.BLoom.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import gachon.BLoom.member.dto.RegistMemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,9 +27,6 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
-    private String password;
-
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -37,14 +35,23 @@ public class Member {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Authority authority;
+    private Role role;
 
-    @Column(name = "doc_num" , nullable = true, unique = true)
-    private String doctorNumber;
+    @Column(name = "provider",nullable = false)
+    private String provider;
 
     @JsonManagedReference
     @JsonBackReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Diagnose> diagnoseList;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private Account account;
+
+    public Member update(String username, String userImage) {
+        this.username = username;
+        this.userImage = userImage;
+        return this;
+    }
 
 }

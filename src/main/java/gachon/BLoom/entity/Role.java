@@ -1,5 +1,5 @@
 package gachon.BLoom.entity;
 
-public enum Authority {
+public enum Role {
     MEMBER, DOCTOR, ADMIN
 }

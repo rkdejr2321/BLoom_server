@@ -1,4 +1,4 @@
-package gachon.BLoom.member.oauth;
+package gachon.BLoom.member.dto;
 
 import gachon.BLoom.entity.Member;
 import lombok.Getter;

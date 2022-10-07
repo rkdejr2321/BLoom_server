@@ -1,5 +1,7 @@
 package gachon.BLoom.member.dto;
 
+import gachon.BLoom.entity.Account;
+import gachon.BLoom.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +18,8 @@ public class RegistMemberDto {
     private String username;
     private String password;
     private MultipartFile userImage;
+
+    public Account toEntity(Account account, Member member) {
+        return new Account(member, account.getEmail(), account.getPassword());
+    }
 }

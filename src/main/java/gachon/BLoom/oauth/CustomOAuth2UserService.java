@@ -1,4 +1,4 @@
-package gachon.BLoom.member.oauth;
+package gachon.BLoom.oauth;
 
 import gachon.BLoom.entity.Member;
 import gachon.BLoom.member.dto.SessionMember;
@@ -31,19 +31,23 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         log.info(String.valueOf(userRequest.getClientRegistration()));
         log.info(String.valueOf(oAuth2User.getAttributes()));
+
         // 현재 로그인 진행 중인 서비스를 구분하는 코드
         String registrationId = userRequest
                 .getClientRegistration()
                 .getRegistrationId();
+
         // oauth2 로그인 진행 시 키가 되는 필드값
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails()
                 .getUserInfoEndpoint()
                 .getUserNameAttributeName();
+
         // OAuthAttributes: attribute를 담을 클래스 (개발자가 생성)
         OAuthAttributes attributes = OAuthAttributes
                 .of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         Member member = saveOrUpdate(attributes);
+
         log.info(member.getUsername());
         // SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
         httpSession.setAttribute("member", new SessionMember(member));
