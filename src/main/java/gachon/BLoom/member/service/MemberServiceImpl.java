@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void registMember(RegistMemberDto registMemberDto){
-        Optional<Account> findAccount = memberRepository.findAccountByEmail(registMemberDto.getEmail());
+        Optional<Account> findAccount = accountRepository.findAccountByEmail(registMemberDto.getEmail());
         if(!findAccount.isEmpty()) {
             throw new DuplicateMemberException("이미 가입된 이메일입니다.");
         } else {
@@ -54,6 +54,14 @@ public class MemberServiceImpl implements MemberService {
                     .build();
 
             accountRepository.save(registMemberDto.toEntity(account, member));
+        }
+    }
+
+    @Override
+    public void memberInfoUpdate(RegistMemberDto registMemberDto) throws DuplicateMemberException {
+        Optional<Member> findMember = memberRepository.findMemberByUsername(registMemberDto.getUsername());
+        if(findMember.isPresent()) {
+            throw new DuplicateMemberException("이미 존재하는 닉네임입니다.");
         }
     }
 

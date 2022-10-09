@@ -8,5 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface MemberService {
     void registMember(RegistMemberDto registMemberDto);
+
+    void memberInfoUpdate(RegistMemberDto registMemberDto);
     LoginInfoDto login(LoginMemberDto loginMemberDto);
+
 }

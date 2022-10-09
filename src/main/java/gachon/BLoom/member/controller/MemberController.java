@@ -11,18 +11,19 @@ import gachon.BLoom.oauth.CustomOAuth2UserService;
 import gachon.BLoom.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @Slf4j
 public class MemberController {
 
@@ -33,6 +34,7 @@ public class MemberController {
     private OAuth2AuthorizedClientService authorizedClientService;
     //일반 사용자 회원가입
     @PostMapping("/member/signup")
+    @ResponseBody
     public ResponseEntity<?> memberSignUp(RegistMemberDto registMemberDto) {
         try {
             memberService.registMember(registMemberDto);
@@ -42,25 +44,51 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/")
+    public String index(Model model) {
+        Object member = httpSession.getAttribute(SessionConstants.LOGIN_MEMBER);
+        model.addAttribute("member", member);
+        return "index";
+    }
 
     @PostMapping("/login")
+    @ResponseBody
     public ResponseEntity<?> logIn(HttpServletRequest request, @RequestBody LoginMemberDto loginMemberDto) {
         try {
+            // 로그인 시도
             LoginInfoDto loginInfoDto = memberService.login(loginMemberDto);
+
+            //세션 유지
             HttpSession session = request.getSession();
             session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMemberDto);
+
+            //로그인 성공
             return new ResponseEntity<>(loginInfoDto,HttpStatus.OK);
         } catch (NotMatchPasswordException e) {
             return new ResponseEntity<>("아이디와 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST );
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        //현재 유지하고 있는 세션 가져오기
+        HttpSession session = request.getSession(Boolean.parseBoolean(SessionConstants.LOGIN_MEMBER));
+
+        //세션 제거
+        session.invalidate();
+
+        //첫 화면으로 리다이렉트
+        return "redirect: /login";
+    }
+
     @PostMapping("/mailConfirm")
+    @ResponseBody
     public void verifyCodeSend(@RequestBody String email) throws Exception {
         emailService.sendConfirmMessage(email);
     }
 
     @PostMapping("/mailVerify")
+    @ResponseBody
     public ResponseEntity<?> codeVerify(@RequestBody String code) throws Exception {
         if(emailService.ePw.equals(code)) {
             return new ResponseEntity<>("인증이 완료되었습니다.", HttpStatus.OK);

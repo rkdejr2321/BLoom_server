@@ -48,9 +48,10 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
     private Account account;
 
-    public Member update(String username, String userImage) {
+    public Member update(String username, String userImage, String email) {
         this.username = username;
         this.userImage = userImage;
+        this.email = email;
         return this;
     }
 
