@@ -41,13 +41,13 @@ public class Member {
     private String provider;
 
     @JsonManagedReference
-    @JsonBackReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Diagnose> diagnoseList;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
     private Account account;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Board> board;
 

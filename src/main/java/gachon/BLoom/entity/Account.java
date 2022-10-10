@@ -1,5 +1,6 @@
 package gachon.BLoom.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Account {
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JsonBackReference
     @JoinColumn(name = "member_id")
     private Member member;
 
