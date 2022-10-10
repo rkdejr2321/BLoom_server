@@ -42,11 +42,14 @@ public class Member {
 
     @JsonManagedReference
     @JsonBackReference
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Diagnose> diagnoseList;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
     private Account account;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Board> board;
 
     public Member update(String username, String userImage, String email) {
         this.username = username;
