@@ -41,6 +41,12 @@ dependencies {
 
 	//OAuth
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	//twitter
+	implementation 'io.github.redouane59.twitter:twittered:2.2'
+
+	//WebClient
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 tasks.named('test') {
