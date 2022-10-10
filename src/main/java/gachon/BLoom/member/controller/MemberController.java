@@ -60,8 +60,9 @@ public class MemberController {
 
             //세션 유지
             HttpSession session = request.getSession();
-            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMemberDto);
+            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginInfoDto);
 
+            log.info(session.getId());
             //로그인 성공
             return new ResponseEntity<>(loginInfoDto,HttpStatus.OK);
         } catch (NotMatchPasswordException e) {

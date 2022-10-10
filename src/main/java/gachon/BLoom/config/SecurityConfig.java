@@ -48,10 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+
                 // 접근제한 풀어주기
                 // 해당 uri는 토큰이 없는 상태로 요청이 들어오기 때문에 허용
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/member/signup").permitAll()
 
                 .anyRequest().authenticated()
                 .and()
