@@ -68,7 +68,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public LoginInfoDto login(LoginMemberDto loginMemberDto) {
         Optional<Account> account = accountRepository.findAccountByEmail(loginMemberDto.getEmail());
-        log.info(account.get().getPassword());
+
         if(account.isEmpty() || !passwordEncoder.matches(loginMemberDto.getPassword(), account.get().getPassword())) {
             throw new NotMatchPasswordException("아이디와 비밀번호가 일치하지 않습니다.");
         } else {

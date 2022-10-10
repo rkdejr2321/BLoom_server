@@ -69,6 +69,14 @@ public class MemberController {
         }
     }
 
+/*    @GetMapping("/login/twitter")
+    @ResponseBody
+    public LoginMemberDto twitterLogin() {
+
+    }*/
+
+
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         //현재 유지하고 있는 세션 가져오기
@@ -79,6 +87,11 @@ public class MemberController {
 
         //첫 화면으로 리다이렉트
         return "redirect: /login";
+    }
+
+    @GetMapping("/success")
+    public String success() {
+        return "success";
     }
 
     @PostMapping("/mailConfirm")
