@@ -31,11 +31,16 @@ public class Board {
     @Column(name = "writer", nullable = false)
     private String writer;
 
-    @Column(name = "delete_yn", nullable = true)
-    private String deleteYn;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "delete")
+    private Delete delete;
 
     @Column(name = "insert_date", nullable = false)
     private LocalDateTime insertDate = LocalDateTime.now();
+
+    @Column(name = "delete_time", nullable = true)
+    private LocalDateTime deleteDate;
 
     @Column(name = "update_date", nullable = true)
     private LocalDateTime updateDate;
@@ -45,4 +50,10 @@ public class Board {
     @JoinColumn(name = "member_id")
     private Member member;
 
+
+    public Board delete() {
+        this.delete = Delete.Y;
+        this.deleteDate = LocalDateTime.now();
+        return this;
+    }
 }

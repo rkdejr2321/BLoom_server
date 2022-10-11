@@ -11,8 +11,10 @@ import java.time.LocalDateTime;
 @Builder
 public class BoardDto {
 
+    private Long id;
     private String title;
     private String content;
     private String writer;
-    private LocalDateTime localDateTime;
+    private LocalDateTime insertTime;
+
 }
