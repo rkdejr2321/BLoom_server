@@ -20,8 +20,8 @@ public class Account {
     @Column(name = "account_id")
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "password")
     private String password;
@@ -31,9 +31,14 @@ public class Account {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public Account(Member member, String email, String password) {
+    public Account(Member member, String userId, String password) {
         this.member = member;
-        this.email = email;
+        this.userId = userId;
         this.password = password;
+    }
+
+    public Account changePw(String pw) {
+        this.password = pw;
+        return this;
     }
 }

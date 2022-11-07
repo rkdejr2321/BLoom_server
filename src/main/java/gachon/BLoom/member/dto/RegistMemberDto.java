@@ -16,10 +16,10 @@ public class RegistMemberDto {
 
     private String email;
     private String username;
+    private String userId;
     private String password;
-    private MultipartFile userImage;
 
     public Account toEntity(Account account, Member member) {
-        return new Account(member, account.getEmail(), account.getPassword());
+        return new Account(member, account.getUserId(), account.getPassword());
     }
 }

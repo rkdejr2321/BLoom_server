@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class LoginInfoDto {
 
+    private String token;
+    private String memberId;
     private String username;
     private String email;
     private String userImage;
+
 }

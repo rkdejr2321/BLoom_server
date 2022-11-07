@@ -1,12 +1,20 @@
 package gachon.BLoom.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "diagnose_table")
+@Table(name = "diagnose")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Diagnose {
 
@@ -23,8 +31,13 @@ public class Diagnose {
     @Column(name = "social_account", nullable = false)
     private String socialAccount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "checking")
+    private boolean checking;
+
+
+    @ManyToOne()
     @JoinColumn(name = "member_id")
+    @JsonManagedReference
     private Member member;
 }
 

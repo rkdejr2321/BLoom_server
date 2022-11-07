@@ -1,20 +1,18 @@
 package gachon.BLoom.board.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class BoardDto {
+@AllArgsConstructor
+public class BoardUpdateDto {
 
-    private String token;
-    private Long memberId;
-    private String category;
+    private Long id;
     private String title;
     private String content;
+    private String category;
 }

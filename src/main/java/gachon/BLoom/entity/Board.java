@@ -1,6 +1,9 @@
 package gachon.BLoom.entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import gachon.BLoom.board.dto.BoardUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "board")
@@ -19,8 +23,11 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
     private Long id;
+
+
+    @Column(name = "category", nullable = false)
+    private String category;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -28,32 +35,27 @@ public class Board {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "writer", nullable = false)
-    private String writer;
+
+    @Column(name = "created", nullable = false)
+    private LocalDateTime created = LocalDateTime.now();
 
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "delete")
-    private Delete delete;
+    @Column(name = "updated", nullable = true)
+    private LocalDateTime updated;
 
-    @Column(name = "insert_date", nullable = false)
-    private LocalDateTime insertDate = LocalDateTime.now();
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comment;
 
-    @Column(name = "delete_time", nullable = true)
-    private LocalDateTime deleteDate;
 
-    @Column(name = "update_date", nullable = true)
-    private LocalDateTime updateDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @ManyToOne()
     @JoinColumn(name = "member_id")
     private Member member;
 
-
-    public Board delete() {
-        this.delete = Delete.Y;
-        this.deleteDate = LocalDateTime.now();
+    public Board update(BoardUpdateDto boardUpdateDto) {
+        this.title = boardUpdateDto.getTitle();
+        this.category = boardUpdateDto.getCategory();
+        this.content = boardUpdateDto.getContent();
+        this.updated = LocalDateTime.now();
         return this;
     }
 }

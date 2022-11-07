@@ -31,8 +31,9 @@ dependencies {
 
 	//thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	//test DB
-	runtimeOnly 'com.h2database:h2'
+	//mysql
+	runtimeOnly 'mysql:mysql-connector-java'
+	implementation group: 'org.javassist', name: 'javassist', version: '3.29.0-GA'
 
 	//email
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -47,6 +48,11 @@ dependencies {
 
 	//WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	//jwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 }
 
 tasks.named('test') {

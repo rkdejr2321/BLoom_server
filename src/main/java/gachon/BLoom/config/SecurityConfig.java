@@ -1,8 +1,5 @@
 package gachon.BLoom.config;
 
-
-import gachon.BLoom.oauth.CustomOAuth2UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,17 +8,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final CustomOAuth2UserService customOAuth2UserService;
+
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public HttpFirewall defaultHttpFireWall() {
+        return new DefaultHttpFirewall();
+    }
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
@@ -30,13 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/favicon.ico"
                         ,"/error"
                 );
+        web.httpFirewall(defaultHttpFireWall());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
-                .csrf().disable()
+                .csrf()
+                .disable()
 
                 .exceptionHandling()
 
@@ -54,12 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/member/signup").permitAll()
-
                 .anyRequest().authenticated()
+
                 .and()
-                .logout().logoutSuccessUrl("/")
-                .and()
-                .oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
+                .logout().logoutSuccessUrl("/");
+
     }
 }
 
