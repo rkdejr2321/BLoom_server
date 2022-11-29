@@ -23,3 +23,10 @@
 ![Ngrok](https://img.shields.io/badge/Ngrok-1F1E37?style=for-the-badge&logo=Ngrok&logoColor=white)
 ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=Heroku&logoColor=white)
 
+### 백엔드 구현
+
+* 사용자의 SNS 게시글을 가져올 스크래핑 서버와 통신하여 SNS 피드를 AI 모델에 넣고 결과를 응답 받아 DB에 저장
+* 최근 4건의 검사 결과 API
+* 자가 진단 API
+* 게시판
+* 회원 가입, 회원 관리
